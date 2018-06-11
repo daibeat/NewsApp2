@@ -17,8 +17,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-// Nicola -- you missed to implement the LoaderCallbacks interface, take a look here at LoaderManager callbacks
-// https://google-developer-training.gitbooks.io/android-developer-fundamentals-course-concepts/content/en/Unit%203/71c_asynctask_and_asynctaskloader_md.html#loaders
+/* Nicola -- you missed to implement the LoaderCallbacks interface, take a look here at LoaderManager callbacks.
+    LoaderCallbacks takes a generic type as parameter (https://www.tutorialspoint.com/java/java_generics.htm), this parameter should be a List<NewsApp>
+ https://google-developer-training.gitbooks.io/android-developer-fundamentals-course-concepts/content/en/Unit%203/71c_asynctask_and_asynctaskloader_md.html#loaders */
 
 public class NewsAppActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsApp>> {
 
@@ -26,7 +27,7 @@ public class NewsAppActivity extends AppCompatActivity implements LoaderManager.
      * URL for news data from the GUARDIAN dataset
      */
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?q=debates&api-key=1a7f20bb-6ff7-4f90-80ec-f504b72cffe2";
+            "https://content.guardianapis.com/search?q=debates&api-key=test";
 
     /**
      * Constant value for the news loader ID. We can choose any integer.
