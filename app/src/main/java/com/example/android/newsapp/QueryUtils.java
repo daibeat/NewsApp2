@@ -148,7 +148,11 @@ public final class QueryUtils {
 
             // Extract the JSONArray associated with the key called "JSONResponse",
             // which represents a list of features (or news).
-            JSONArray newsArray = baseJsonResponse.getJSONArray("JSONResponse");
+            JSONObject responseObject = (JSONObject) baseJsonResponse.get("response");
+            JSONArray newsArray = responseObject.getJSONArray("results");
+
+            /* Nicola -- here you have some parsing issues, check the response format of the api. If you want you can use
+            JSON lint tool https://jsonlint.com/ */
 
             // For each news in the newsArray, create an {@link NewsApp} object
             for (int i = 0; i < newsArray.length(); i++) {
@@ -177,9 +181,9 @@ public final class QueryUtils {
                 String url = properties.getString("url");
                 
                 // Create a new {@link NewsApp} object with the artTitle, secName,artDate,artAuthor and url.
-                NewsApp newsApp = new NewsApp(newsTitle, newsSection, date, author, url);
+                NewsApp newsElement = new NewsApp(newsTitle, newsSection, date, author, url);
                 // and url from the JSON response.
-                newsApps.add(newsApp);
+                newsApp.add(newsElement);
             }
 
         } catch (JSONException e) {

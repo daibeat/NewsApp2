@@ -3,6 +3,7 @@ package com.example.android.newsapp;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -16,7 +17,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsAppActivity extends AppCompatActivity {
+/* Nicola -- you missed to implement the LoaderCallbacks interface, take a look here at LoaderManager callbacks.
+    LoaderCallbacks takes a generic type as parameter (https://www.tutorialspoint.com/java/java_generics.htm), this parameter should be a List<NewsApp>
+ https://google-developer-training.gitbooks.io/android-developer-fundamentals-course-concepts/content/en/Unit%203/71c_asynctask_and_asynctaskloader_md.html#loaders */
+
+public class NewsAppActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsApp>> {
 
     /**
      * URL for news data from the GUARDIAN dataset
@@ -103,15 +108,16 @@ public class NewsAppActivity extends AppCompatActivity {
         }
     }
 
+    // Nicola -- Here there are overrides on your callbacks
     @Override
     public Loader<List<NewsApp>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
         return new NewsLoader(this, GUARDIAN_REQUEST_URL);
     }
 
+    // Nicola -- On loading finished you can present your data :) :)
     @Override
     public void onLoadFinished(Loader<List<NewsApp>> loader, List<NewsApp> news) {
-
         // Set empty state text to display "No news found."
         mEmptyStateTextView.setText("no news found");
 
@@ -125,9 +131,9 @@ public class NewsAppActivity extends AppCompatActivity {
         }
     }
 
+    // Nicola -- clear adapter on loader reset
     @Override
-    public void onLoaderReset(Loader<List<NewsApp>> loader) {
-        // Loader reset, so we can clear out our existing data.
+    public void onLoaderReset(Loader loader) {
         mAdapter.clear();
     }
 }
