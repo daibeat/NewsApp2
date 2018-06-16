@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -53,16 +57,25 @@ public class NewsAdapter extends ArrayAdapter<NewsApp> {
         // Find the TextView with view ID section
         TextView sectionTextView = (TextView) listItemView.findViewById(R.id.section);
         sectionTextView.setText(currentNews.getNews_section());
-
         //Find the TextView with ID date
         TextView dateTextView = listItemView.findViewById(R.id.date);
-        dateTextView.setText(currentNews.getDate());
 
-        // Find the TextView with the author
-        TextView authorTextView = (TextView) listItemView.findViewById(R.id.author);
-        authorTextView.setText(currentNews.getAuthor());
+        //Find the url
+        TextView urlTextView = (TextView) listItemView.findViewById(R.id.url);
+        urlTextView.setText(currentNews.getUrl());
 
+        // Display the category of the current news in that TextView
+        SimpleDateFormat dateFormatJSON = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("EE dd MMM yyyy", Locale.ENGLISH);
 
+        try {
+            Date dateNews = dateFormatJSON.parse(currentNews.getWebPublicationDate());
+
+            String date = dateFormat2.format(dateNews);
+            dateTextView.setText(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;

@@ -15,15 +15,11 @@ public class NewsApp {
     /**
      * Date of the article news
      */
-    private String date;
-    /**
-     * Author of the article news
-     */
-    private String author;
+    private String getWebPublicationDate;
     /**
      * Website URL of the article news
      */
-    private String url;
+    private String webUrl;
 
     /**
      * Constructs a new {@link NewsApp} object
@@ -31,15 +27,13 @@ public class NewsApp {
      * @param newsTitle   is the title of the article
      * @param newsSection is the Section of the article news
      * @param date           is the date of publication of the news on the GUARDIAN website
-     * @param author         is the author of the article
      * @param url            is the url of the article news
      */
-    NewsApp(String newsTitle, String newsSection, String date, String author, String url) {
+    NewsApp(String newsTitle, String newsSection, String date, String url) {
         news_title = newsTitle;
         news_section = newsSection;
-        this.date = date;
-        this.author = author;
-        this.url = url;
+        this.getWebPublicationDate = date;
+        this.webUrl = webUrl;
     }
 
     /**
@@ -59,21 +53,15 @@ public class NewsApp {
     /**
      * Returns the date of the article news
      */
-    public String getDate() {
-        return date;
+    public String getWebPublicationDate() {
+        return getWebPublicationDate;
     }
 
-    /**
-     * Returns the author of the article
-     */
-    public String getAuthor() {
-        return author;
-    }
 
     /**
      * Returns the website url of the article news
      */
     public String getUrl() {
-        return url;
+        return webUrl;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.android.newsapp;
 
 import android.app.LoaderManager;
+import android.content.Loader;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -16,13 +17,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsAppActivity extends AppCompatActivity {
-
+public class NewsAppActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<List<NewsApp>> {
     /**
      * URL for news data from the GUARDIAN dataset
      */
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?q=debates&api-key=test";
+            "https://content.guardianapis.com/search?q=art&api-key=test";
 
     /**
      * Constant value for the news loader ID. We can choose any integer.
@@ -42,6 +43,7 @@ public class NewsAppActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_activity);
+
 
         // Find a reference to the {@link ListView} in the layout
         ListView newsListView = (ListView) findViewById(R.id.list);
@@ -104,7 +106,7 @@ public class NewsAppActivity extends AppCompatActivity {
     }
 
     @Override
-    public Loader<List<NewsApp>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<NewsApp>> onCreateLoader(int i, Bundle args) {
         // Create a new loader for the given URL
         return new NewsLoader(this, GUARDIAN_REQUEST_URL);
     }

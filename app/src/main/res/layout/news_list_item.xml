@@ -16,7 +16,7 @@
         tools:text="News Headline will be here" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/section"
         android:layout_below="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_below="@id/description"
+        android:layout_below="@id/section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -38,9 +38,9 @@
         tools:text="Date will be here" />
 
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/url"
         android:layout_toEndOf="@id/date"
-        android:layout_below="@id/description"
+        android:layout_below="@id/section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -51,16 +51,5 @@
         android:textSize="12sp"
         tools:text="Author" />
 
-    <TextView
-        android:id="@+id/section"
-        android:layout_below="@id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-medium"
-        android:maxLines="1"
-        android:textAllCaps="true"
-        android:textSize="12sp"
-        tools:text="Section here" />
 
 </RelativeLayout>

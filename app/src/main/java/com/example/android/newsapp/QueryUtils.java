@@ -148,7 +148,9 @@ public final class QueryUtils {
 
             // Extract the JSONArray associated with the key called "JSONResponse",
             // which represents a list of features (or news).
-            JSONArray newsArray = baseJsonResponse.getJSONArray("JSONResponse");
+            JSONObject responseObject = (JSONObject) baseJsonResponse.get("response");
+
+            JSONArray newsArray = responseObject.getJSONArray("results");
 
             // For each news in the newsArray, create an {@link NewsApp} object
             for (int i = 0; i < newsArray.length(); i++) {
@@ -156,30 +158,22 @@ public final class QueryUtils {
                 // Get a single article (news) at position i within the list of news
                 JSONObject currentNews = newsArray.getJSONObject(i);
 
-                // For a given news, extract the JSONObject associated with the
-                // key called "properties", which represents a list of all properties
-                // for that news.
-                JSONObject properties = currentNews.getJSONObject("properties");
 
                 // Extract the value for the key called "title"
-                String newsTitle = properties.getString("title");
+                String webTitle = currentNews.getString("webTitle");
 
                 // Extract the value for the key called "section"
-                String newsSection = properties.getString("section");
-
+                String sectionName = currentNews.getString("sectionName");
                 // Extract the value for the key called "date"
-                String date = properties.getString("date");
-
-                // Extract the value for the key called "author"
-                String author = properties.getString("author");
+                String webPublicationDate = currentNews.getString("webPublicationDate");
 
                 //Extract the value for the key called"webUrl"
-                String url = properties.getString("url");
-                
-                // Create a new {@link NewsApp} object with the artTitle, secName,artDate,artAuthor and url.
-                NewsApp newsApp = new NewsApp(newsTitle, newsSection, date, author, url);
+                String url = currentNews.getString("url");
+
+                // Create a new {@link NewsApp} object with the artTitle, secName,artDate, and url.
+                NewsApp newsElement = new NewsApp(webTitle, sectionName, webPublicationDate, url);
                 // and url from the JSON response.
-                newsApps.add(newsApp);
+                newsApp.add(newsElement);
             }
 
         } catch (JSONException e) {
