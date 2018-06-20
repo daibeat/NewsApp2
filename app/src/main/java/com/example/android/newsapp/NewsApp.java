@@ -61,7 +61,7 @@ public class NewsApp {
     /**
      * Returns the website url of the article news
      */
-    public String getwebUrl() {
+    public String getWebUrl() {
         return getWebUrl;
     }
 }

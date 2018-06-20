@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class NewsAppActivity extends AppCompatActivity
      * URL for news data from the GUARDIAN dataset
      */
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?q=art&api-key=test";
+            "https://content.guardianapis.com/search?q=art&api-key=1a7f20bb-6ff7-4f90-80ec-f504b72cffe2"; // Nicola06202018 this is my key, please replace with yours
 
     /**
      * Constant value for the news loader ID. We can choose any integer.
@@ -38,6 +39,8 @@ public class NewsAppActivity extends AppCompatActivity
 
     /** TextView that is displayed when the list is empty */
     private TextView mEmptyStateTextView;
+    // Nicola06202018 make your progress bar be an instance variable for your class https://en.wikipedia.org/wiki/Instance_variable
+    private ProgressBar pbLoadingNews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class NewsAppActivity extends AppCompatActivity
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         newsListView.setAdapter(mAdapter);
-
+        pbLoadingNews = (ProgressBar) findViewById(R.id.pbLoadingNews);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         newsListView.setEmptyView(mEmptyStateTextView);
 
@@ -68,7 +71,7 @@ public class NewsAppActivity extends AppCompatActivity
                 NewsApp currentNews = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri newsUri = Uri.parse(currentNews.getUrl());
+                Uri newsUri = Uri.parse(currentNews.getWebUrl());
 
                 // Create a new intent to view the news URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
@@ -97,8 +100,7 @@ public class NewsAppActivity extends AppCompatActivity
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
-            View loadingIndicator = findViewById(R.id.loading_spinner);
-            loadingIndicator.setVisibility(View.GONE);
+            pbLoadingNews.setVisibility(View.GONE);
 
             // Update empty state with no connection error message
             mEmptyStateTextView.setText("no internet connection");
@@ -125,11 +127,13 @@ public class NewsAppActivity extends AppCompatActivity
         if (news != null && !news.isEmpty()) {
             mAdapter.addAll(news);
         }
+        pbLoadingNews.setVisibility(View.GONE);
     }
 
     @Override
     public void onLoaderReset(Loader<List<NewsApp>> loader) {
         // Loader reset, so we can clear out our existing data.
+        pbLoadingNews.setVisibility(View.VISIBLE);
         mAdapter.clear();
     }
 }

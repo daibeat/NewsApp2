@@ -167,8 +167,9 @@ public final class QueryUtils {
                 // Extract the value for the key called "date"
                 String webPublicationDate = currentNews.getString("webPublicationDate");
 
-                //Extract the value for the key called"webUrl"
-                String url = currentNews.getString("url");
+                //Extract the value for the key called"webUrl" -- Nicola06202018: you mispelled
+                // json element name, the correct one is webUrl, not url
+                String url = currentNews.getString("webUrl");
 
                 // Create a new {@link NewsApp} object with the artTitle, secName,artDate, and url.
                 NewsApp newsElement = new NewsApp(webTitle, sectionName, webPublicationDate, url);
