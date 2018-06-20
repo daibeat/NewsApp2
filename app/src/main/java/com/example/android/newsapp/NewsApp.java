@@ -19,7 +19,7 @@ public class NewsApp {
     /**
      * Website URL of the article news
      */
-    private String webUrl;
+    private String getWebUrl;
 
     /**
      * Constructs a new {@link NewsApp} object
@@ -27,13 +27,13 @@ public class NewsApp {
      * @param newsTitle   is the title of the article
      * @param newsSection is the Section of the article news
      * @param date           is the date of publication of the news on the GUARDIAN website
-     * @param url            is the url of the article news
+     * @param webUrl            is the url of the article news
      */
-    NewsApp(String newsTitle, String newsSection, String date, String url) {
+    NewsApp(String newsTitle, String newsSection, String date, String webUrl) {
         news_title = newsTitle;
         news_section = newsSection;
         this.getWebPublicationDate = date;
-        this.webUrl = webUrl;
+        this.getWebUrl = webUrl;
     }
 
     /**
@@ -61,7 +61,7 @@ public class NewsApp {
     /**
      * Returns the website url of the article news
      */
-    public String getUrl() {
-        return webUrl;
+    public String getwebUrl() {
+        return getWebUrl;
     }
 }
