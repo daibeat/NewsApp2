@@ -62,7 +62,7 @@ public class NewsAdapter extends ArrayAdapter<NewsApp> {
 
         //Find the url
         TextView urlTextView = (TextView) listItemView.findViewById(R.id.url);
-        urlTextView.setText(currentNews.getUrl());
+        urlTextView.setText(currentNews.getWebUrl());
 
         // Display the category of the current news in that TextView
         SimpleDateFormat dateFormatJSON = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
