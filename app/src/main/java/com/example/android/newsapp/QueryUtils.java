@@ -158,20 +158,41 @@ public final class QueryUtils {
                 // Get a single article (news) at position i within the list of news
                 JSONObject currentNews = newsArray.getJSONObject(i);
 
-
                 // Extract the value for the key called "title"
                 String webTitle = currentNews.getString("webTitle");
 
                 // Extract the value for the key called "section"
                 String sectionName = currentNews.getString("sectionName");
+
                 // Extract the value for the key called "date"
                 String webPublicationDate = currentNews.getString("webPublicationDate");
 
                 //Extract the value for the key called"webUrl"
-                String url = currentNews.getString("url");
+                String webUrl = currentNews.getString("webUrl");
 
-                // Create a new {@link NewsApp} object with the artTitle, secName,artDate, and url.
-                NewsApp newsElement = new NewsApp(webTitle, sectionName, webPublicationDate, url);
+                //Extract the JSONArray associated with the key called "tags",
+                JSONArray currentNewsAuthorArray = currentNews.getJSONArray("tags");
+
+                String newsAuthor = "N/A";
+
+                //Check if "tags" array contains data
+                int tagsLength = currentNewsAuthorArray.length();
+
+
+                if (tagsLength == 1) {
+                    // Create a JSONObject for author
+                    JSONObject currentNewsAuthor = currentNewsAuthorArray.getJSONObject(0);
+
+                    String newsAuthor1 = currentNewsAuthor.getString("webTitle");
+
+                    newsAuthor = newsAuthor1;
+
+                }
+
+                // Create a new {@link NewsApp} object with the artTitle, secName,artDate, url, and
+                // author.
+                NewsApp newsElement = new NewsApp(webTitle, sectionName, webPublicationDate, webUrl,
+                        newsAuthor);
                 // and url from the JSON response.
                 newsApp.add(newsElement);
             }

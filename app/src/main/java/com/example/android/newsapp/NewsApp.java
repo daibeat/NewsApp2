@@ -20,20 +20,26 @@ public class NewsApp {
      * Website URL of the article news
      */
     private String getWebUrl;
+    /**
+     * Author of the article news if provided
+     */
+    private String getAuthor;
 
     /**
      * Constructs a new {@link NewsApp} object
      *
      * @param newsTitle   is the title of the article
      * @param newsSection is the Section of the article news
-     * @param date           is the date of publication of the news on the GUARDIAN website
-     * @param webUrl            is the url of the article news
+     * @param date        is the date of publication of the news on the GUARDIAN website
+     * @param webUrl      is the url of the article news
+     * @param getAuthor  is the author of the article
      */
-    NewsApp(String newsTitle, String newsSection, String date, String webUrl) {
+    NewsApp(String newsTitle, String newsSection, String date, String webUrl, String getAuthor) {
         news_title = newsTitle;
         news_section = newsSection;
         this.getWebPublicationDate = date;
         this.getWebUrl = webUrl;
+        this.getAuthor = getAuthor;
     }
 
     /**
@@ -57,11 +63,18 @@ public class NewsApp {
         return getWebPublicationDate;
     }
 
-
     /**
      * Returns the website url of the article news
      */
-    public String getwebUrl() {
+    public String getGetWebUrl() {
         return getWebUrl;
     }
+    /**
+     * Returns the author of the article news
+     */
+    public String getAuthor() {
+        return getAuthor;
+    }
+
+
 }

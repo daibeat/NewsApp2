@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="divider_height">0dp</dimen>
+    <dimen name="padding_main">16dp</dimen>
+    <dimen name="title_textSize">16sp</dimen>
+    <dimen name="textSize_section">13sp</dimen>
+    <dimen name="date_textSize">12sp</dimen>
+    <dimen name="marginTop_author">7dp</dimen>
+    <dimen name="marginTop_date">8dp</dimen>
+</resources>

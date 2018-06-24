@@ -1,5 +1,9 @@
 package com.example.android.newsapp;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.content.Context;
@@ -13,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,12 @@ public class NewsAppActivity extends AppCompatActivity
      * URL for news data from the GUARDIAN dataset
      */
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?q=art&api-key=test";
+            "https://content.guardianapis.com/tags?q=art&api-key=21c4f550-ca0b-4536-843d-e3b6b70b13e3";
+
+    /**
+     * API student key
+     */
+    private static final String API_STUDENT_KEY = "21c4f550-ca0b-4536-843d-e3b6b70b13e3";
 
     /**
      * Constant value for the news loader ID. We can choose any integer.
@@ -36,7 +44,9 @@ public class NewsAppActivity extends AppCompatActivity
      */
     private NewsAdapter mAdapter;
 
-    /** TextView that is displayed when the list is empty */
+    /**
+     * TextView that is displayed when the list is empty
+     */
     private TextView mEmptyStateTextView;
 
     @Override
@@ -58,7 +68,6 @@ public class NewsAppActivity extends AppCompatActivity
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         newsListView.setEmptyView(mEmptyStateTextView);
 
-
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected news.
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,7 +77,7 @@ public class NewsAppActivity extends AppCompatActivity
                 NewsApp currentNews = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri newsUri = Uri.parse(currentNews.getUrl());
+                Uri newsUri = Uri.parse(currentNews.getGetWebUrl());
 
                 // Create a new intent to view the news URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
@@ -96,26 +105,56 @@ public class NewsAppActivity extends AppCompatActivity
             loaderManager.initLoader(GUARDIAN_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
+
             // First, hide loading indicator so error message will be visible
-            View loadingIndicator = findViewById(R.id.loading_spinner);
-            loadingIndicator.setVisibility(View.GONE);
+            View loadingSpinner = findViewById(R.id.loading_spinner);
+            loadingSpinner.setVisibility(View.GONE);
+
 
             // Update empty state with no connection error message
-            mEmptyStateTextView.setText("no internet connection");
+            mEmptyStateTextView.setText(R.string.no_internet);
         }
     }
 
     @Override
     public Loader<List<NewsApp>> onCreateLoader(int i, Bundle args) {
-        // Create a new loader for the given URL
-        return new NewsLoader(this, GUARDIAN_REQUEST_URL);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second parameter is the
+        // default value for this preference.
+        String minNews = sharedPrefs.getString(
+                getString(R.string.settings_item_per_page_key),
+                getString(R.string.settings_item_per_page_default));
+
+        String orderByTopic  = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value.
+        uriBuilder.appendQueryParameter("format", "json");
+        uriBuilder.appendQueryParameter("minnews", minNews);
+        uriBuilder.appendQueryParameter("order-by", orderByTopic);
+
+        //Free student key from the Guardian API website
+        uriBuilder.appendQueryParameter(getString(R.string.api_key), API_STUDENT_KEY);
+
+        // Return the completed uri
+        return new NewsLoader(this, uriBuilder.toString());
+
     }
 
     @Override
     public void onLoadFinished(Loader<List<NewsApp>> loader, List<NewsApp> news) {
 
-        // Set empty state text to display "No news found."
-        mEmptyStateTextView.setText("no news found");
+        // Set empty state text to display "No news found..."
+        mEmptyStateTextView.setText(R.string.no_news);
 
         // Clear the adapter of previous news data
         mAdapter.clear();
@@ -125,13 +164,41 @@ public class NewsAppActivity extends AppCompatActivity
         if (news != null && !news.isEmpty()) {
             mAdapter.addAll(news);
         }
+
+        View loadingSpinner = findViewById(R.id.loading_spinner);
+        loadingSpinner.setVisibility(View.GONE);
     }
 
     @Override
     public void onLoaderReset(Loader<List<NewsApp>> loader) {
+
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
     }
+
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
 }
+
+
+
+
 
 

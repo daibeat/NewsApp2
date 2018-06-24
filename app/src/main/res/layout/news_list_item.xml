@@ -2,54 +2,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:background="@color/background"
+    android:padding="@dimen/padding_main">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
-        android:maxLines="1"
-        android:textAllCaps="true"
-        android:textSize="20sp"
+        android:maxLines="2"
+        android:textColor="@color/title_color"
+        android:textSize="@dimen/title_textSize"
         tools:text="News Headline will be here" />
 
     <TextView
         android:id="@+id/section"
-        android:layout_below="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
         android:ellipsize="end"
-        android:maxLines="2"
-        android:textSize="16sp"
-        tools:text="Description of the Guardian news will be placed here in this area" />
+        android:maxLines="1"
+        android:textColor="@color/section_color"
+        android:textSize="@dimen/textSize_section"
+        android:textStyle="italic"
+        tools:text="Section of the Guardian news" />
+
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/section"
+        android:layout_marginTop="@dimen/marginTop_author"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:textColor="@color/author_color"
+        android:textSize="@dimen/date_textSize"
+        tools:text="Author here" />
+
 
     <TextView
         android:id="@+id/date"
-        android:layout_below="@id/section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/author"
+        android:layout_marginTop="@dimen/marginTop_date"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:maxLines="1"
         android:textAllCaps="true"
-        android:textSize="12sp"
+        android:textColor="@color/date_color"
+        android:textSize="@dimen/date_textSize"
         tools:text="Date will be here" />
-
-    <TextView
-        android:id="@+id/url"
-        android:layout_toEndOf="@id/date"
-        android:layout_below="@id/section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-medium"
-        android:maxLines="1"
-        android:textAllCaps="true"
-        android:textSize="12sp"
-        tools:text="Author" />
 
 
 </RelativeLayout>

@@ -6,18 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * An {@link NewsAdapter} knows how to create a list item layout for each earthquake
  * in the data source (a list of {@link NewsApp} objects).
- *
  * These list item layouts will be provided to an adapter view like ListView
  * to be displayed to the user.
  */
@@ -27,9 +24,9 @@ public class NewsAdapter extends ArrayAdapter<NewsApp> {
      * Constructs a new {@link NewsAdapter}.
      *
      * @param context of the app
-     * @param news is the list of news, which is the data source of the adapter
+     * @param news    is the list of news, which is the data source of the adapter
      */
-    public NewsAdapter (Context context, List<NewsApp> news) {
+    public NewsAdapter(Context context, List<NewsApp> news) {
         super(context, 0, news);
     }
 
@@ -57,12 +54,13 @@ public class NewsAdapter extends ArrayAdapter<NewsApp> {
         // Find the TextView with view ID section
         TextView sectionTextView = (TextView) listItemView.findViewById(R.id.section);
         sectionTextView.setText(currentNews.getNews_section());
+
+        //Find the TextView with ID author
+        TextView authorTextView =  (TextView) listItemView.findViewById(R.id.author);
+        authorTextView.setText(currentNews.getAuthor());
+
         //Find the TextView with ID date
         TextView dateTextView = listItemView.findViewById(R.id.date);
-
-        //Find the url
-        TextView urlTextView = (TextView) listItemView.findViewById(R.id.url);
-        urlTextView.setText(currentNews.getUrl());
 
         // Display the category of the current news in that TextView
         SimpleDateFormat dateFormatJSON = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
